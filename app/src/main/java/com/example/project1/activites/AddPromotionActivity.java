@@ -1,5 +1,6 @@
 package com.example.project1.activites;
 
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -217,13 +218,15 @@ public class AddPromotionActivity extends AppCompatActivity {
                     Toast.makeText(this, "Mức giảm phần trăm phải từ 0 đến 100", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                String maxDiscountAmountStr = etMaxDiscountAmount.getText().toString().trim();
+                if (TextUtils.isEmpty(maxDiscountAmountStr)) {
+                    Toast.makeText(this, "Vui lòng nhập giảm tối đa", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                maxDiscountAmount = Double.parseDouble(maxDiscountAmountStr);
             }
-            String maxDiscountAmountStr = etMaxDiscountAmount.getText().toString().trim();
-            if (TextUtils.isEmpty(maxDiscountAmountStr)) {
-                Toast.makeText(this, "Vui lòng nhập giảm tối đa", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            maxDiscountAmount = Double.parseDouble(maxDiscountAmountStr);
+
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Vui lòng nhập số hợp lệ", Toast.LENGTH_SHORT).show();
             return;
