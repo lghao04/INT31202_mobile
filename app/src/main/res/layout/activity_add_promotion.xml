@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Loại khuyến mãi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loại khuyến mãi"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgDiscountType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/rbFixedAmount"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:text="Mức giảm" />
+
+            <RadioButton
+                android:id="@+id/rbPercentage"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                android:text="Theo %" />
+        </RadioGroup>
+
+        <!-- Mức giảm -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="137dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Mức giảm" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/etDiscountAmountValue"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập số"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/tvDiscountUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="đ"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+<!--giảm tối đa-->
+        <LinearLayout
+            android:id="@+id/layoutMaxDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Giảm tối đa" />
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/etMaxDiscountAmount"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:hint="đ"
+                    android:inputType="number" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="đ"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--        đơn tối thiểu-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Đơn tối thiểu" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/etMinimumOrderValue"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập số"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/tvMinimumOrderUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="đ"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Tổng lượt sử dụng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:gravity="start|center_vertical"
+                android:text="Tổng lượt sử dụng" />
+
+
+            <Button
+                android:id="@+id/btnMinusTotalUsage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:padding="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+
+
+            <!-- Ô nhập liệu nhỏ -->
+            <EditText
+                android:id="@+id/etTotalUsage"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint=""
+                android:textSize="16sp"
+                android:background="@android:drawable/edit_text"
+                android:padding="0dp" />
+
+            <!-- Nút cộng -->
+            <Button
+                android:id="@+id/btnPlusTotalUsage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="4dp"
+                android:padding="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+
+        </LinearLayout>
+
+
+        <!-- Lượt sử dụng tối đa / người -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:gravity="start|center_vertical"
+                android:text="Lượt sử dụng tối đa/người mua" />
+
+            <Button
+                android:id="@+id/btnMinusUsagePerUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:padding="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+
+
+            <!-- Ô nhập liệu nhỏ -->
+            <EditText
+                android:id="@+id/etUsagePerUser"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint=""
+                android:textSize="16sp"
+                android:background="@android:drawable/edit_text"
+                android:padding="0dp" />
+
+            <!-- Nút cộng -->
+            <Button
+                android:id="@+id/btnPlusUsagePerUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="4dp"
+                android:padding="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+        </LinearLayout>
+
+
+        <!-- Thời gian bắt đầu -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Thiết lập thời gian hiển thị"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="153dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Thời gian bắt đầu" />
+
+            <EditText
+                android:id="@+id/etStartDate"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:hint="dd/MM/yyyy HH:mm"
+                android:focusable="false"
+                android:inputType="none" />
+        </LinearLayout>
+
+
+        <!-- Thời gian kết thúc -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="153dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Thời gian kết thúc" />
+
+            <EditText
+                android:id="@+id/etEndDate"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:hint="dd/MM/yyyy HH:mm"
+                android:focusable="false"
+                android:inputType="none" />
+        </LinearLayout>
+
+
+        <!-- Mã giảm giá -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="Mã giảm giá" />
+
+            <EditText
+                android:id="@+id/etPromoCode"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:hint="VD: SALE50"
+                android:inputType="text" />
+        </LinearLayout>
+
+
+
+
+
+        <!-- Nút Xem trước & Xác nhận -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="24dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnPreview"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Xem trước" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận"
+                android:backgroundTint="@color/design_default_color_primary"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

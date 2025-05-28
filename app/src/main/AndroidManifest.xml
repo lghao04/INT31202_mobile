@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.project1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label=""
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Project1">
+        <activity
+            android:name=".activites.AddPromotionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.HistoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.VerifiedDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MenuItemDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.AddMenuItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Khai báo MainActivity (nếu vẫn cần) -->
+        <activity
+            android:name=".activites.introActivity"
+            android:exported="false" /> <!-- Khai báo loginActivity (nếu cần) -->
+        <activity
+            android:name=".activites.loginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.HomeActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

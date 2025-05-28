@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <TextView
+      android:id="@+id/tvOrderId"
+      android:text="Mã đơn:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  <TextView
+      android:id="@+id/tvOrderTime"
+      android:text="Thời gian:"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  <TextView
+      android:id="@+id/tvNote"
+      android:text="Ghi chú:"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewItems"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:layout_marginTop="12dp" />
+
+  <TextView
+      android:id="@+id/tvSubtotal"
+      android:text="Tạm tính:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      android:layout_marginTop="12dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  <!-- Nút liên hệ shipper -->
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:weightSum="2"
+      android:gravity="center">
+
+    <Button
+        android:id="@+id/btnCancelOrder"
+        android:text="Hủy đơn hàng"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#7B1FA2" />
+
+    <Button
+        android:id="@+id/btnContactShipper"
+        android:text="Liên hệ shipper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp" />
+  </LinearLayout>
+
+</LinearLayout>
