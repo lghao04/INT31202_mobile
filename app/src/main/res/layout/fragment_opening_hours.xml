@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Repeat for 7 days -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvMonday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvMondayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvMondayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvTuesday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 3"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvTuesdayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvTuesdayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvWednesday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 4"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvWednesdayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvWednesdayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvThursday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 5"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvThursdayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvThursdayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvFriday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 6"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvFridayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvFridayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvSaturday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Thứ 7"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSaturdayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvSaturdayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvSunday"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Chủ nhật"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSundayOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvSundayClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:padding="8dp"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+
+
+        <!-- Nút lưu -->
+        <Button
+            android:id="@+id/btnSaveHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu thời gian mở cửa" />
+    </LinearLayout>
+</ScrollView>
