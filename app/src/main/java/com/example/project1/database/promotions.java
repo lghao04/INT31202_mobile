@@ -1,6 +1,10 @@
 package com.example.project1.database;
 
-public class promotions {
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public class promotions implements Serializable {
     private String id; // sẽ gán thủ công từ push key
     private String promoCode;
     private String discountType;
@@ -12,10 +16,22 @@ public class promotions {
     private String minimumOrder;
     private String restaurantId;
     private double maxDiscountAmount;
+    private boolean expired = false;
 
     public promotions() {
         // Firebase cần constructor rỗng
     }
+
+
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
 
     // Getters and Setters
     public String getId() { return id; }

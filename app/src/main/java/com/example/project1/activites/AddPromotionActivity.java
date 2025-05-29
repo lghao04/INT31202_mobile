@@ -1,57 +1,48 @@
 package com.example.project1.activites;
 
-
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
+import com.example.project1.database.promotions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.text.InputType;
-import java.util.Calendar;
+import java.util.*;
 
 public class AddPromotionActivity extends AppCompatActivity {
 
     private RadioGroup rgDiscountType;
     private RadioButton rbFixedAmount, rbPercentage;
-    private EditText etDiscountAmount, etMinimumOrder, etTotalUsage, etUsagePerUser, etStartDate, etEndDate, etPromoCode,etMaxDiscountAmount;
-    ;
-    private Button btnMinusTotalUsage, btnPlusTotalUsage, btnMinusUsagePerUser, btnPlusUsagePerUser, btnConfirm, btnPreview;
-
+    private EditText etDiscountAmount, etMinimumOrder, etTotalUsage, etUsagePerUser,
+            etStartDate, etEndDate, etPromoCode, etMaxDiscountAmount;
+    private Button btnMinusTotalUsage, btnPlusTotalUsage, btnMinusUsagePerUser,
+            btnPlusUsagePerUser, btnConfirm;
     private ProgressDialog progressDialog;
-
-    private String restaurantId;
+    private String restaurantId, promotionId = null;
     private LinearLayout layoutMaxDiscount;
-    private  TextView tvDiscountUnit;
+    private TextView tvDiscountUnit;
+
+    private boolean isEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_promotion);
 
-        // Lấy restaurantId từ FirebaseAuth
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             restaurantId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         } else {
@@ -63,82 +54,48 @@ public class AddPromotionActivity extends AppCompatActivity {
         initViews();
         setupListeners();
 
-        // Mặc định chọn "Mức giảm" (tính theo tiền)
         rbFixedAmount.setChecked(true);
-
-        etStartDate.setInputType(InputType.TYPE_NULL);  // tắt gõ tay
+        etStartDate.setInputType(InputType.TYPE_NULL);
         etEndDate.setInputType(InputType.TYPE_NULL);
-
         etStartDate.setOnClickListener(v -> showDateTimePicker(etStartDate));
         etEndDate.setOnClickListener(v -> showDateTimePicker(etEndDate));
 
+        // Check edit mode và nhận đối tượng promotions
+        if (getIntent() != null && getIntent().hasExtra("promotionObject")) {
+            isEditMode = true;
 
+            promotions promotion = (promotions) getIntent().getSerializableExtra("promotionObject");
+            if (promotion != null) {
+                promotionId = promotion.getId();
+                populateFields(promotion);
+                btnConfirm.setText("Cập nhật");
+            }
+        }
     }
 
     private void initViews() {
         rgDiscountType = findViewById(R.id.rgDiscountType);
         rbFixedAmount = findViewById(R.id.rbFixedAmount);
         rbPercentage = findViewById(R.id.rbPercentage);
-
         etDiscountAmount = findViewById(R.id.etDiscountAmountValue);
         etMinimumOrder = findViewById(R.id.etMinimumOrderValue);
-         tvDiscountUnit = findViewById(R.id.tvDiscountUnit);
+        tvDiscountUnit = findViewById(R.id.tvDiscountUnit);
         etMaxDiscountAmount = findViewById(R.id.etMaxDiscountAmount);
-
         etTotalUsage = findViewById(R.id.etTotalUsage);
         etUsagePerUser = findViewById(R.id.etUsagePerUser);
-
         btnMinusTotalUsage = findViewById(R.id.btnMinusTotalUsage);
         btnPlusTotalUsage = findViewById(R.id.btnPlusTotalUsage);
-
         btnMinusUsagePerUser = findViewById(R.id.btnMinusUsagePerUser);
         btnPlusUsagePerUser = findViewById(R.id.btnPlusUsagePerUser);
-
         etStartDate = findViewById(R.id.etStartDate);
         etEndDate = findViewById(R.id.etEndDate);
-
         etPromoCode = findViewById(R.id.etPromoCode);
-
         btnConfirm = findViewById(R.id.btnConfirm);
-        btnPreview = findViewById(R.id.btnPreview);
-
         layoutMaxDiscount = findViewById(R.id.layoutMaxDiscount);
 
-
-
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Đang lưu...");
+        progressDialog.setMessage("Đang xử lý...");
         progressDialog.setCancelable(false);
-    }
-
-
-    private void showDateTimePicker(EditText targetEditText) {
-        final Calendar currentDate = Calendar.getInstance();
-        final Calendar date = Calendar.getInstance();
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year, month, dayOfMonth) -> {
-                    date.set(Calendar.YEAR, year);
-                    date.set(Calendar.MONTH, month);
-                    date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                            (timeView, hourOfDay, minute) -> {
-                                date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                date.set(Calendar.MINUTE, minute);
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-                                targetEditText.setText(sdf.format(date.getTime()));
-
-                            }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), true);
-
-                    timePickerDialog.show();
-                },
-                currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH),
-                currentDate.get(Calendar.DAY_OF_MONTH));
-
-        datePickerDialog.show();
     }
 
     private void setupListeners() {
@@ -146,46 +103,86 @@ public class AddPromotionActivity extends AppCompatActivity {
             if (checkedId == R.id.rbFixedAmount) {
                 tvDiscountUnit.setText("đ");
                 layoutMaxDiscount.setVisibility(View.GONE);
-            } else if (checkedId == R.id.rbPercentage) {
+            } else {
                 tvDiscountUnit.setText("%");
                 layoutMaxDiscount.setVisibility(View.VISIBLE);
             }
         });
 
-
-
-
         btnMinusTotalUsage.setOnClickListener(v -> decrementEditTextValue(etTotalUsage));
         btnPlusTotalUsage.setOnClickListener(v -> incrementEditTextValue(etTotalUsage));
-
         btnMinusUsagePerUser.setOnClickListener(v -> decrementEditTextValue(etUsagePerUser));
         btnPlusUsagePerUser.setOnClickListener(v -> incrementEditTextValue(etUsagePerUser));
 
-        btnConfirm.setOnClickListener(v -> savePromotion());
-
+        btnConfirm.setOnClickListener(v -> saveOrUpdatePromotion());
     }
 
-    private void decrementEditTextValue(EditText editText) {
-        int current = 0;
-        try {
-            String text = editText.getText().toString().trim();
-            current = text.isEmpty() ? 0 : Integer.parseInt(text);
-        } catch (NumberFormatException ignored) {}
+    // Chuyển từ Map sang nhận đối tượng promotions
+    private void populateFields(promotions promotion) {
+        etPromoCode.setText(promotion.getPromoCode());
+        etMinimumOrder.setText(promotion.getMinimumOrder());
+        etDiscountAmount.setText(String.valueOf(promotion.getDiscountAmount()));
+        etTotalUsage.setText(String.valueOf(promotion.getTotalUsage()));
+        etUsagePerUser.setText(String.valueOf(promotion.getUsagePerUser()));
+        etStartDate.setText(promotion.getStartDate());
+        etEndDate.setText(promotion.getEndDate());
+
+        String type = promotion.getDiscountType();
+        if ("percentage".equals(type)) {
+            rbPercentage.setChecked(true);
+            etMaxDiscountAmount.setText(String.valueOf(promotion.getMaxDiscountAmount()));
+        } else {
+            rbFixedAmount.setChecked(true);
+        }
+    }
+
+    private void showDateTimePicker(EditText target) {
+        final Calendar current = Calendar.getInstance();
+        final Calendar selected = Calendar.getInstance();
+
+        DatePickerDialog datePicker = new DatePickerDialog(this,
+                (view, year, month, day) -> {
+                    selected.set(Calendar.YEAR, year);
+                    selected.set(Calendar.MONTH, month);
+                    selected.set(Calendar.DAY_OF_MONTH, day);
+
+                    TimePickerDialog timePicker = new TimePickerDialog(this,
+                            (timeView, hour, minute) -> {
+                                selected.set(Calendar.HOUR_OF_DAY, hour);
+                                selected.set(Calendar.MINUTE, minute);
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                                target.setText(sdf.format(selected.getTime()));
+                            }, current.get(Calendar.HOUR_OF_DAY), current.get(Calendar.MINUTE), true);
+
+                    timePicker.show();
+                },
+                current.get(Calendar.YEAR),
+                current.get(Calendar.MONTH),
+                current.get(Calendar.DAY_OF_MONTH));
+
+        datePicker.show();
+    }
+
+    private void decrementEditTextValue(EditText et) {
+        int current = parseIntSafe(et.getText().toString().trim(), 0);
         if (current > 0) current--;
-        editText.setText(String.valueOf(current));
+        et.setText(String.valueOf(current));
     }
 
-    private void incrementEditTextValue(EditText editText) {
-        int current = 0;
+    private void incrementEditTextValue(EditText et) {
+        int current = parseIntSafe(et.getText().toString().trim(), 0);
+        et.setText(String.valueOf(++current));
+    }
+
+    private int parseIntSafe(String value, int defaultVal) {
         try {
-            String text = editText.getText().toString().trim();
-            current = text.isEmpty() ? 0 : Integer.parseInt(text);
-        } catch (NumberFormatException ignored) {}
-        current++;
-        editText.setText(String.valueOf(current));
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultVal;
+        }
     }
 
-    private void savePromotion() {
+    private void saveOrUpdatePromotion() {
         String discountType = rbFixedAmount.isChecked() ? "fixed_amount" : "percentage";
         String discountAmountStr = etDiscountAmount.getText().toString().trim();
         String minimumOrderStr = etMinimumOrder.getText().toString().trim();
@@ -203,75 +200,58 @@ public class AddPromotionActivity extends AppCompatActivity {
             return;
         }
 
-        int discountAmount;
-        int totalUsage;
-        int usagePerUser;
+        int discountAmount = parseIntSafe(discountAmountStr, -1);
+        int totalUsage = parseIntSafe(totalUsageStr, -1);
+        int usagePerUser = parseIntSafe(usagePerUserStr, -1);
         double maxDiscountAmount = 0;
 
-        try {
-            discountAmount = Integer.parseInt(discountAmountStr);
-            totalUsage = Integer.parseInt(totalUsageStr);
-            usagePerUser = Integer.parseInt(usagePerUserStr);
-
-            if (discountType.equals("percentage")) {
-                if (discountAmount < 0 || discountAmount > 100) {
-                    Toast.makeText(this, "Mức giảm phần trăm phải từ 0 đến 100", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String maxDiscountAmountStr = etMaxDiscountAmount.getText().toString().trim();
-                if (TextUtils.isEmpty(maxDiscountAmountStr)) {
-                    Toast.makeText(this, "Vui lòng nhập giảm tối đa", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                maxDiscountAmount = Double.parseDouble(maxDiscountAmountStr);
+        if ("percentage".equals(discountType)) {
+            if (discountAmount < 0 || discountAmount > 100) {
+                Toast.makeText(this, "Phần trăm giảm không hợp lệ", Toast.LENGTH_SHORT).show();
+                return;
             }
-
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Vui lòng nhập số hợp lệ", Toast.LENGTH_SHORT).show();
-            return;
+            String maxDiscountStr = etMaxDiscountAmount.getText().toString().trim();
+            if (TextUtils.isEmpty(maxDiscountStr)) {
+                Toast.makeText(this, "Vui lòng nhập giảm tối đa", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            maxDiscountAmount = Double.parseDouble(maxDiscountStr);
         }
-
 
         progressDialog.show();
 
-        // Tạo đối tượng promotion
-        HashMap<String, Object> promotionMap = new HashMap<>();
-        promotionMap.put("restaurantId", restaurantId);
-        promotionMap.put("discountType", discountType);
-        promotionMap.put("discountAmount", discountAmount);
-        promotionMap.put("minimumOrder", minimumOrderStr);
-        promotionMap.put("totalUsage", totalUsage);
-        promotionMap.put("usagePerUser", usagePerUser);
-        promotionMap.put("startDate", startDateStr);
-        promotionMap.put("endDate", endDateStr);
-        promotionMap.put("promoCode", promoCode);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("restaurantId", restaurantId);
+        map.put("discountType", discountType);
+        map.put("discountAmount", discountAmount);
+        map.put("minimumOrder", minimumOrderStr);
+        map.put("totalUsage", totalUsage);
+        map.put("usagePerUser", usagePerUser);
+        map.put("startDate", startDateStr);
+        map.put("endDate", endDateStr);
+        map.put("promoCode", promoCode);
 
-        if (discountType.equals("percentage")) {
-            promotionMap.put("maxDiscountAmount", maxDiscountAmount); // ✅ chỉ khi là phần trăm
+        if ("percentage".equals(discountType)) {
+            map.put("maxDiscountAmount", maxDiscountAmount);
         }
 
-        // Lấy reference database
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("promotions");
+        String key = isEditMode && promotionId != null ? promotionId : ref.push().getKey();
 
-        // Tạo key mới cho promotion
-        String promotionId = ref.push().getKey();
-
-        if (promotionId == null) {
+        if (key == null) {
             progressDialog.dismiss();
-            Toast.makeText(this, "Lỗi hệ thống, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi hệ thống", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ref.child(promotionId)
-                .setValue(promotionMap)
+        ref.child(key).setValue(map)
                 .addOnCompleteListener(task -> {
                     progressDialog.dismiss();
                     if (task.isSuccessful()) {
-                        Toast.makeText(AddPromotionActivity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
-                        finish(); // Quay về Fragment quản lý khuyến mãi
+                        Toast.makeText(this, isEditMode ? "Cập nhật thành công" : "Tạo thành công", Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
-                        Toast.makeText(AddPromotionActivity.this, "Lưu thất bại: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Thất bại: " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

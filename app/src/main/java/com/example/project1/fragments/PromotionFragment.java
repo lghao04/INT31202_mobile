@@ -12,21 +12,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.example.project1.R;
 import com.example.project1.activites.AddPromotionActivity;
 import com.example.project1.adapter.PromotionItemsAdapter;
 import com.example.project1.database.promotions;
 import com.google.firebase.database.*;
-import java.util.ArrayList;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class PromotionFragment extends Fragment {
     private RecyclerView recyclerView;
     private PromotionItemsAdapter adapter;
     private ArrayList<promotions> promotionItems;
-    private ImageButton fab;
+    private ImageButton fab , filter;
+    private TextView filterStatus;
 
 
     @Override
@@ -44,14 +51,38 @@ public class PromotionFragment extends Fragment {
 
         fab.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), AddPromotionActivity.class));
+
+        });
+        filter = view.findViewById(R.id.btnFilter);
+        filterStatus = view.findViewById(R.id.tvFilterStatus);
+
+        filter.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(getContext(), filter);
+            popupMenu.getMenu().add("Khả dụng");
+            popupMenu.getMenu().add("Hết hạn");
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                String selected = item.getTitle().toString();
+                if (selected.equals("Khả dụng")) {
+                    loadPromotionItems("Khả dụng");
+                    filterStatus.setText("Khả dụng"); // Cập nhật trạng thái lọc
+                } else if (selected.equals("Hết hạn")) {
+                    loadPromotionItems("Hết hạn");// Cập nhật trạng thái lọc
+                    filterStatus.setText("Hết hạn");
+                }
+                return true;
+            });
+
+            popupMenu.show();
         });
 
-        loadPromotionItems();
+
+        loadPromotionItems("Khả dụng");
 
         return view;
     }
 
-    private void loadPromotionItems() {
+    private void loadPromotionItems(@NonNull String status) {
         String restaurantId = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("promotions");
 
@@ -63,8 +94,24 @@ public class PromotionFragment extends Fragment {
                         for (DataSnapshot itemSnap : snapshot.getChildren()) {
                             promotions item = itemSnap.getValue(promotions.class);
                             if (item != null) {
-                                item.setId(itemSnap.getKey()); // 👈 Gán ID từ push key
-                                promotionItems.add(item);
+                                item.setId(itemSnap.getKey());// 👈 Gán ID từ push key
+
+                                try {
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                                    Date endDate = sdf.parse(item.getEndDate());
+                                    Date currentDate = new Date();
+                                    boolean isExpired = endDate != null && currentDate.after(endDate);
+                                    item.setExpired(isExpired);
+
+                                    // ⚠️ Chỉ thêm vào danh sách nếu đúng trạng thái cần lọc
+                                    if ((status.equals("Khả dụng") && !isExpired)
+                                            || (status.equals("Hết hạn") && isExpired)) {
+                                        promotionItems.add(item);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         }
                         adapter.notifyDataSetChanged();

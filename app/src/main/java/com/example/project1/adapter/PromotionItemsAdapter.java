@@ -1,9 +1,12 @@
 package com.example.project1.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
+import com.example.project1.activites.AddPromotionActivity;
 import com.example.project1.database.promotions;
 
 import java.util.List;
@@ -55,6 +59,24 @@ public class PromotionItemsAdapter extends RecyclerView.Adapter<PromotionItemsAd
 
         holder.tvPromoDate.setText(item.getStartDate() + " - " + item.getEndDate());
 
+        if (item.isExpired()) {
+            holder.itemView.setAlpha(0.5f); // Làm mờ
+            holder.itemView.setBackgroundColor(Color.LTGRAY); // Nền xám
+        }
+        else {
+            holder.itemView.setAlpha(1.0f);
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        }
+
+        holder.btnEditPromo.setOnClickListener(v -> {
+            Intent intent = new Intent(context, AddPromotionActivity.class);
+            intent.putExtra("promotionId", item.getId());
+            intent.putExtra("promotionObject", item); // đảm bảo có toMap() trả về HashMap<String, Object>
+            context.startActivity(intent);
+
+
+        });
+
     }
 
     @Override
@@ -65,6 +87,8 @@ public class PromotionItemsAdapter extends RecyclerView.Adapter<PromotionItemsAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvPromoCode, tvPromoDesc, tvPromoDate,tvPromoRule;
         ImageButton btnEditPromo;
+        ImageButton filter;
+        TextView filterStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +97,8 @@ public class PromotionItemsAdapter extends RecyclerView.Adapter<PromotionItemsAd
             tvPromoRule = itemView.findViewById(R.id.tvPromoRule);
             tvPromoDate = itemView.findViewById(R.id.tvPromoDate);
             btnEditPromo = itemView.findViewById(R.id.btnEditPromo);
+            filter = itemView.findViewById(R.id.btnFilter);
+            filterStatus = itemView.findViewById(R.id.tvFilterStatus);
         }
     }
 }
