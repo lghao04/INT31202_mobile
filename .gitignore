@@ -1,15 +1,32 @@
+# Java/Android Studio generated files
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.gradle/
+.idea/
 local.properties
+.DS_Store
+
+# Build output
+/build/
+app/build/
+.cxx/
+.externalNativeBuild/
+
+# Captures and logs
+captures/
+*.log
+
+# Keystore files (nếu có)
+*.jks
+
+# Firebase and sensitive configs
+google-services.json
+app/google-services.json
+app/secret_config.json
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+
+# Others
+*.apk
+*.ap_
