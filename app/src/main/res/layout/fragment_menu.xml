@@ -14,16 +14,13 @@
 
     <ImageButton
         android:id="@+id/fabAddDish"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="15dp"
         android:background="@drawable/bg_fab_circle"
-        android:src="@drawable/plus"
+        android:src="@drawable/ic_add"
         android:scaleType="fitCenter"
         android:contentDescription="Thêm món"
-        android:elevation="8dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:tint="@null" />
+        android:elevation="8dp" />
 </FrameLayout>

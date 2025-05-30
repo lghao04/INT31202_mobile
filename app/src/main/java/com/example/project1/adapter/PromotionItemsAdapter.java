@@ -60,14 +60,14 @@ public class PromotionItemsAdapter extends RecyclerView.Adapter<PromotionItemsAd
         holder.tvPromoDate.setText(item.getStartDate() + " - " + item.getEndDate());
 
         if (item.isExpired()) {
-            holder.itemView.setAlpha(0.5f); // Làm mờ
             holder.itemView.setBackgroundColor(Color.LTGRAY); // Nền xám
+            holder.btnEditPromo.setVisibility(View.GONE); // Ẩn nút chỉnh sửa
         }
         else {
-            holder.itemView.setAlpha(1.0f);
-            holder.itemView.setBackgroundColor(Color.WHITE);
-        }
 
+            holder.itemView.setBackgroundColor(Color.WHITE);
+            holder.btnEditPromo.setVisibility(View.VISIBLE); // Ẩn nút chỉnh sửa
+        }
         holder.btnEditPromo.setOnClickListener(v -> {
             Intent intent = new Intent(context, AddPromotionActivity.class);
             intent.putExtra("promotionId", item.getId());
@@ -76,6 +76,8 @@ public class PromotionItemsAdapter extends RecyclerView.Adapter<PromotionItemsAd
 
 
         });
+
+
 
     }
 
