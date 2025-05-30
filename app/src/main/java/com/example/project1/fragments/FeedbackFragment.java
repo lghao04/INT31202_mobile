@@ -101,6 +101,7 @@ public class FeedbackFragment extends Fragment {
         final int totalUsers = userIds.size();
         final int[] loadedCount = {0};
 
+
         for (String userId : userIds) {
             userRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
