@@ -71,11 +71,37 @@
         android:textColor="#888888" />
 
     <!-- Ảnh review -->
-    <ImageView
-        android:id="@+id/imageReview"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewImages"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp" />
+
+
+<!--phan hồi-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewReplies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
         android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
         android:visibility="gone" />
+
+
+
+
+    <!-- Nút phản hồi -->
+    <Button
+        android:id="@+id/btnReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="#FFA726"
+        android:text="Thêm phản hồi"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF" />
+
 </LinearLayout>

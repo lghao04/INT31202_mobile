@@ -11,6 +11,9 @@ public class Review {
     private Map<String, Object> timestamp;
     private String userId;
     private String reviewId;
+    private Map<String, Reply> replies;
+
+
 
 
 
@@ -57,5 +60,11 @@ public class Review {
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
+    public Map<String, Reply> getReplies() {
+        return replies;
+    }
 
+    public void setReplies(Map<String, Reply> replies) {
+        this.replies = replies;
+    }
 }

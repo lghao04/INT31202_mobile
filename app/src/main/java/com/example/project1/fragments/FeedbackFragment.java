@@ -5,14 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
 import com.example.project1.adapter.ReviewAdapter;
+import com.example.project1.database.Reply;
 import com.example.project1.database.Review;
 import com.example.project1.database.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +42,11 @@ public class FeedbackFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewFeedback);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ReviewAdapter(getContext(), reviewList, userMap);
+        String restaurantId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        adapter = new ReviewAdapter(getContext(), reviewList, userMap, restaurantId, (position, review) -> {
+            showReplyDialog(review);
+        });
+
         recyclerView.setAdapter(adapter);
 
         loadReviews();
@@ -133,5 +141,54 @@ public class FeedbackFragment extends Fragment {
             });
         }
     }
+
+    private void showReplyDialog(Review review) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Trả lời đánh giá");
+
+        final EditText input = new EditText(getContext());
+        input.setHint("Nhập trả lời của bạn...");
+        builder.setView(input);
+
+        builder.setPositiveButton("Gửi", (dialog, which) -> {
+            String replyContent = input.getText().toString().trim();
+            if (replyContent.isEmpty()) {
+                // Có thể thêm Toast thông báo người dùng nhập nội dung
+                return;
+            }
+
+            // Lấy senderId hiện tại (có thể là userId hoặc restaurantId)
+            String senderId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            // Tạo đối tượng Reply
+            Reply reply = new Reply(senderId, replyContent, System.currentTimeMillis());
+
+            // Tham chiếu đến nhánh replies của review trên Firebase
+            DatabaseReference replyRef = FirebaseDatabase.getInstance()
+                    .getReference("reviews")
+                    .child(review.getReviewId())
+                    .child("replies");
+
+            // Tạo key mới cho reply
+            String newReplyKey = replyRef.push().getKey();
+
+            if (newReplyKey != null) {
+                replyRef.child(newReplyKey).setValue(reply)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(getContext(), "Trả lời đã được gửi", Toast.LENGTH_SHORT).show();
+                            // Nếu cần reload danh sách hoặc update adapter thì gọi ở đây
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Gửi trả lời thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            }
+        });
+
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
+    }
+
+
 
 }
