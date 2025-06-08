@@ -1,7 +1,5 @@
 package com.example.project1.database;
 
-import com.example.project1.database.Address;
-
 import java.util.Map;
 
 public class User {

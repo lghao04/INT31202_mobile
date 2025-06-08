@@ -60,6 +60,27 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
+
+    // build.gradle (module)
+    implementation("com.google.firebase:firebase-appcheck-playintegrity:17.0.1")
+
+    implementation("com.google.firebase:firebase-functions:20.4.0")
+    implementation("com.google.android.gms:play-services-base:18.4.0")
+    implementation("com.google.android.gms:play-services-auth:21.0.0") // hoặc các gói bạn cần
+
+
+
+
+
+    implementation(libs.firebase.functions)
+    implementation(libs.firebase.appcheck.debug)
+
+
+
 
 
     testImplementation(libs.junit)

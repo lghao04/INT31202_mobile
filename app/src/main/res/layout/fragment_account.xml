@@ -1,114 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageButton
+        android:id="@+id/btnMenu"
+        android:layout_width="48dp"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:contentDescription="Menu"
+        android:src="@drawable/ic_menu"
+        app:layout_anchor="@+id/btnMenu"
+        app:layout_anchorGravity="start|top" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
-        <!-- Ảnh nhà hàng -->
-        <ImageView
-            android:id="@+id/imageRestaurant"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_default"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/btnChangeImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đổi ảnh nhà hàng" />
-
-        <!-- Tên nhà hàng -->
-        <EditText
-            android:id="@+id/edtRestaurantName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tên nhà hàng"
-            android:layout_marginTop="16dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:divider="?android:attr/dividerHorizontal"
+            android:showDividers="middle"
+            android:dividerPadding="8dp">
 
-        <!-- Email -->
-        <EditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:enabled="false"
-            android:inputType="textEmailAddress" />
+            <!-- Ảnh nhà hàng -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-        <!-- Số điện thoại -->
-        <EditText
-            android:id="@+id/edtPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Số điện thoại"
-            android:inputType="phone" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageRestaurant"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:contentDescription="Ảnh nhà hàng"
+                    android:src="@drawable/img_default" />
 
-        <!-- Địa chỉ -->
-        <EditText
-            android:id="@+id/edtAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nhập địa chỉ..." />
+                <ImageButton
+                    android:id="@+id/btnEditImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/icon_edit"
+                    android:visibility="gone" />
+            </FrameLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerSuggestions"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:visibility="gone"/>
-        <!-- Giờ làm việc -->
-        <TextView
-            android:id="@+id/txtUpdateOpeningHours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cập nhật thời gian mở/đóng cửa >"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="onUpdateOpeningHoursClicked" />
-        <!-- Ví và Đánh giá -->
-        <TextView
-            android:id="@+id/txtWallet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Số dư ví: 0.000 đ"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
+            <!-- Thông tin hồ sơ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:padding="16dp">
 
-        <TextView
-            android:id="@+id/txtRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đánh giá: 0.0 ⭐"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
-        <!-- Nút lưu và đăng xuất -->
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lưu cập nhật"
-            android:layout_marginTop="20dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tên nhà hàng">
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đăng xuất"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/holo_red_dark" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtRestaurantName"
+                            android:enabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                    <TextView
+                        android:id="@+id/txtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Email: restaurant@email.com"
+                        android:textColor="@android:color/darker_gray"
+                        android:textStyle="italic"
+                        android:textSize="20dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Số điện thoại"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtPhone"
+                            android:enabled="false"
+                            android:inputType="phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nhập địa chỉ..."
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtAddress"
+                            android:enabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSuggestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:visibility="gone"
+                        android:layout_marginTop="8dp"/>
+
+                    <!-- Spinner chọn danh mục -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Danh mục:"
+                        android:layout_marginTop="12dp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@android:color/black"
+                        />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Thông tin tài chính & đánh giá -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/txtWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Số dư ví: 0.000 đ"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:paddingBottom="4dp"/>
+
+                    <TextView
+                        android:id="@+id/txtRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Đánh giá: 0.0 ⭐"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:paddingBottom="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nút lưu (ẩn mặc định) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lưu cập nhật"
+                android:visibility="gone"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_edit_profile" android:title="Chỉnh sửa hồ sơ" />
+    <item android:id="@+id/menu_update_hours" android:title="Cập nhật giờ mở/đóng" />
+    <item android:id="@+id/menu_logout" android:title="Đăng xuất" />
+</menu>

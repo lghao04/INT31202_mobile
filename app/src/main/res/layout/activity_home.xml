@@ -5,7 +5,8 @@
     android:id="@+id/restaurant_home_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activites.HomeActivity">
+    tools:context=".activites.HomeActivity"
+    android:background="@color/white">
 
     <!-- Nội dung chính (fragment hoặc layout) -->
 
@@ -29,5 +30,6 @@
         app:labelVisibilityMode="labeled"
         app:itemIconTint="@color/selector_bottom_icon"
         app:itemTextColor="@color/selector_bottom_text"
-        android:background="@color/white" />
+        android:background="@color/white"
+        app:itemBackground="@color/white"/>
 </RelativeLayout>
