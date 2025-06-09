@@ -16,14 +16,29 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background" />
 
+        <!-- Tên món -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên món ăn"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
         <EditText
             android:id="@+id/etName"
             android:hint="Tên món"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_marginTop="16dp"
             android:enabled="false" />
+
+        <!-- Mô tả -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
 
         <EditText
             android:id="@+id/etDescription"
@@ -32,12 +47,28 @@
             android:layout_height="wrap_content"
             android:enabled="false" />
 
+        <!-- Danh mục -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh mục"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
         <EditText
             android:id="@+id/etCategory"
             android:hint="Danh mục"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false" />
+
+        <!-- Giá -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá (VNĐ)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
 
         <EditText
             android:id="@+id/etPrice"
@@ -46,6 +77,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false" />
+
+        <!-- Thời gian chuẩn bị -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời gian chuẩn bị (phút)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
 
         <EditText
             android:id="@+id/etPrepTime"
